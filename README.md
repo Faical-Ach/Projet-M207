@@ -3,17 +3,17 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 ## Getting docker images
 
-<-1-> Install docker:
+1. Install docker:
 
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
-<-2-> Install [Contairnet decker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
+2. Install [Contairnet decker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
 
 ```bash
 docker pull containernet/containernet
 ```
 
-<-3-> Install [ONOS docker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
+3. Install [ONOS docker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
 
 ```bash
 docker pull onosproject/onos
