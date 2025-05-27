@@ -71,3 +71,8 @@ Connect to the ONOS controller by executing:
 docker exec -it onos bash
 ```
 
+execute the Onos Command Line Interface (CLI) or client console by executing:
+
+```bash
+./apache-karaf-4.2.8/bin/client
+```
