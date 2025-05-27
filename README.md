@@ -1,5 +1,5 @@
 # Projet-M207
-Infrastructure SDN avec ONOS, cluster Kubernetes via kubeadm, et supervision GLPI. Déploiement de services HTTPS, MySQL et Samba dans K8s, avec gestion réseau dynamique et inventaire via FusionInventory.
+SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitoring. Deployment of HTTPS, MySQL, and Samba services in Kubernetes, with dynamic network management and inventory via FusionInventory.
 
 ## Getting docker images
 
