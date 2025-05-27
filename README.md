@@ -61,3 +61,13 @@ After a while, both images will be up and running. Log into the Containernet con
 docker exec -it containernet bash
 ```
 
+## Configuring SDN components
+
+"open a new terminal"
+
+Connect to the ONOS controller by executing:
+
+```bash
+docker exec -it onos bash
+```
+
