@@ -37,25 +37,25 @@ s5 = net.addSwitch('s5')
 info('*** Creating links\n')
 
 # switch1 links:
-net.addLink(s1, s2, port=1, port=1)
-net.addLink(s1, s3, port=2, port=1)
-net.addLink(s1, s4, port=3, port=1)
-net.addLink(s1, s5, port=4, port=1)
+net.addLink(s1, s2, 1, 1)
+net.addLink(s1, s3, 2, 1)
+net.addLink(s1, s4, 3, 1)
+net.addLink(s1, s5, 4, 1)
 
 # switch2 links:
-net.addLink(s2, gateway, port=2, port=1)
-net.addLink(s2, s3, port=3, port=2)
-net.addLink(s2, s4, port=4, port=2)
-net.addLink(s2, s5, port=5, port=2)
+net.addLink(s2, gateway, 2, 1)
+net.addLink(s2, s3, 3, 2)
+net.addLink(s2, s4, 4, 2)
+net.addLink(s2, s5, 5, 2)
 
 # switch3 links:
-net.addLink(s3, s4, port=5, port=3)
-net.addLink(s3, h1, port=6, port=1)
+net.addLink(s3, s4, 5, 3)
+net.addLink(s3, h1, 6, 1)
 
 # switch4 links:
-net.addLink(s4, s5, port=6, port=3)
-net.addLink(s4, h2, port=7, port=1)
-net.addLink(s4, h3, port=8, port=1)
+net.addLink(s4, s5, 6, 3)
+net.addLink(s4, h2, 7, 1)
+net.addLink(s4, h3, 8, 1)
 
 
 
