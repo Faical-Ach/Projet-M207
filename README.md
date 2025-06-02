@@ -19,7 +19,7 @@ docker pull containernet/containernet
 docker pull onosproject/onos
 ```
 
-# After cloning the repository with 'git clone', navigate into the project directory:
+# After cloning the repository with `git clone`, navigate into the project directory:
 
 ```bash
 cd Projet-M207
