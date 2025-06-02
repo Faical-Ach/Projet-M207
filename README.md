@@ -7,44 +7,23 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
-2. Install [Contairnet decker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
+2. Install [Contairnet decker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
 
 ```bash
 docker pull containernet/containernet
 ```
 
-3. Install [ONOS docker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
+3. Install [ONOS docker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
 
 ```bash
 docker pull onosproject/onos
 ```
 
 ## Executing the infrastructure
-After the images are pulled, and build you can launch your emulated data-plane and onos controller. To do so, the best way is to create a docker-compose file. Create a file called docker-compose.yml with the following contents (or download it from the repository)
+After the images are pulled and the build process is complete, you can launch your emulated data-plane and ONOS controller using the provided scripts or Docker commands. Make sure all dependencies are properly installed and Docker is running.
 
 ```bash
-version: '3.3'
-
-services:
-  onos:
-    image: onosproject/onos:latest
-    restart: always
-    ports:
-      - "8181:8181"
-      - "6633:6633"
-      - "6653:6653"
-    container_name: onos
-
-  containernet: 
-    depends_on: 
-      - onos
-    image: containernet/containernet:v1
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"      
-    privileged: true
-    pid: host
-    tty: true
-    container_name: containernet
+cd Projet-M207
 ```
 
 After that, execute the docker composition with:
