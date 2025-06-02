@@ -3,6 +3,8 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 ## Getting docker images
 
+*you should be `root`*
+
 1• Install docker:
 
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
@@ -19,7 +21,7 @@ docker pull containernet/containernet
 docker pull onosproject/onos
 ```
 
-# After cloning the repository with `git clone`, navigate into the project directory:
+After cloning the repository with `git clone`, navigate into the project directory:
 
 ```bash
 cd Projet-M207
@@ -27,7 +29,12 @@ cd Projet-M207
 
 4• Create a Docker ubuntu gateway to allow access to the internet and other networks:
 
-We need to creat first *dockerfile*
+We need to creat first `dockerfile`
+
+```basj
+apt install nano
+nano dockerfile
+```
 
 ```bash
 FROM ubuntu:xenial
