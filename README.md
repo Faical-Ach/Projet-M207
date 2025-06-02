@@ -1,21 +1,41 @@
 # Projet-M207
 SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitoring. Deployment of HTTPS, MySQL, and Samba services in Kubernetes, with dynamic network management and inventory via FusionInventory.
 
+## Prepare Your Lab Environment
+
+1• Create the VMs
+
+•Use your preferred virtualization platform (VirtualBox, VMware, KVM, etc.)
+
+•Create three Ubuntu VMs
+
+•Name them exactly as follows:
+
+  --> `SDN`    GUI (Graphical User Interface)
+
+  --> `Master` CLI (Command Line Interface)
+
+  --> `Worker` CLI (Command Line Interface)
+
+• Make sure all three VMs are on the same network so they can communicate. Exemple: `NAT`
+
+• *you should be `root`*
+
 ## Getting docker images
 
-*you should be `root`*
+In Ubuntu `SDN`:
 
-1• Install docker:
+2• Install docker:
 
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
-2• Install [Contairnet decker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
+3• Install [Contairnet decker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
 
 ```bash
 docker pull containernet/containernet
 ```
 
-3• Install [ONOS docker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
+4• Install [ONOS docker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
 
 ```bash
 docker pull onosproject/onos
@@ -27,7 +47,7 @@ After cloning the repository with `git clone`, navigate into the project directo
 cd Projet-M207
 ```
 
-4• Create a Docker ubuntu gateway to allow access to the internet and other networks:
+5• Create a Docker ubuntu gateway to allow access to the internet and other networks:
 
 We need to creat first `dockerfile`
 
@@ -35,6 +55,8 @@ We need to creat first `dockerfile`
 apt install nano
 nano dockerfile
 ```
+
+copy this inside:
 
 ```bash
 FROM ubuntu:xenial
@@ -64,8 +86,9 @@ After the images are pulled and the build process is complete, you can launch yo
 After that, execute the docker composition with:
 
 ```bash
-docker compose up
+docker compose up -d
 ```
+`-d` tells Docker to run containers in the background.
 
 "open a new terminal"
 
@@ -83,6 +106,13 @@ Connect to the ONOS controller by executing:
 
 ```bash
 docker exec -it onos bash
+```
+
+Inside the container, to run the intended topology, execute the following commands:
+```bash
+mn -c;
+curl -O https://raw.githubusercontent.com/Faical-Ach/Projet-M207/main/topo.py;
+python topo.py;
 ```
 
 execute the Onos Command Line Interface (CLI) or client console by executing:
