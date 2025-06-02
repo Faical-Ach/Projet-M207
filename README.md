@@ -135,6 +135,8 @@ Go to the main menu -> Applications. Enable the following applications (select a
 
 • Host Location Provider (org.onosproject.hostprovider)
 
+![Lab Setup](images/topo.py.jpg)
+
 ## Kubernetes Cluster Setup: Master & Worker Nodes
 
 Folow this configuration step by step:
