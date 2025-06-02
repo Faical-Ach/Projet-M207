@@ -13,11 +13,11 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 •Name them exactly as follows:
 
-  --> `SDN`    GUI (Graphical User Interface)
+  --> `SDN`    GUI (Graphical User Interface) / IP Address : 192.168.3.134
 
-  --> `Master` CLI (Command Line Interface)
+  --> `Master` CLI (Command Line Interface)   / IP Address : 192.168.3.129
 
-  --> `Worker` CLI (Command Line Interface)
+  --> `Worker` CLI (Command Line Interface)   / IP Address : 192.168.3.131
 
 • Make sure all three VMs are on the same network so they can communicate. Exemple: `NAT`
 
@@ -55,7 +55,7 @@ We need to creat first `dockerfile`
 
 ```basj
 apt install nano
-nano dockerfile
+nano Dockerfile
 ```
 
 copy this inside:
@@ -239,122 +239,61 @@ worker    Ready    <none>          40h   v1.28.15
 
 ## Creat Services (HTTP,SAMBA,MYSQL):
 
+1• HTTP:
+
 ```bash
-nano services-on-master.yaml
+nano web-server.yml
 ```
 
-1• Set this confige: 
+Set this confige: 
 ```bash
-apiVersion: v1
-kind: Pod
-metadata:
-  name: web-server-pod
-  labels:
-    app: web-server
-spec:
-  nodeName: wnode
-  containers:
-  - name: web-server
-    image: ubuntu
-    command: ["/bin/bash", "-c"]
-    args:
-      - |
-        apt-get update && \
-        DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 && \
-        apache2ctl -D FOREGROUND
-    ports:
-    - containerPort: 80
-      hostPort: 80
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    app: mysql
-  name: mysql-pod
-spec:
-  nodeName: wnode
-  containers:
-  - name: mysql
-    image: mysql:8.0
-    env:
-      - name: MYSQL_ROOT_PASSWORD
-        value: "Root"  # It's a good practice to wrap values in quotes
-    ports:
-      - containerPort: 3306
-        # hostPort is generally not recommended for Pods; use a Service instead
-        hostPort: 30306
-    resources:
-      requests:
-        memory: "512Mi"
-        cpu: "500m"
-      limits:
-        memory: "1Gi"
-        cpu: "1"
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: samba-pod
-  labels:
-    app: samba
-spec:
-  nodeName: wnode
-  hostNetwork: true
-  containers:
-  - name: samba
-    image: dperson/samba
-    args:
-      - "-u"
-      - "smbuser;Root"
-      - "-s"
-      - "shared;/shared;yes;no;no;smbuser"
-    ports:
-      - containerPort: 445
-    volumeMounts:
-      - mountPath: /shared
-        name: samba-data
-  volumes:
-    - name: samba-data
-      hostPath:
-        path: /srv/samba/shared
-        type: DirectoryOrCreate
-
-```
-
-2• Create File web-server-service.yaml
-we use this service to redirect trafic to my web-server-pod also 
-allow me to use port 80 instead of node port 30080
-
-```bash
-nano web-server-service.yaml
-```
-
-Then:
-```bash
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-server-service
+  name: web-service
 spec:
   selector:
-    app: web-server
+    app: web
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - port: 80
+    targetPort: 80
   type: NodePort
 
 ```
-
-3• We Will create mysql-service.yaml also :
+2• MYSQL:
 
 ```bash
-nano mysql-service.yaml
+nano mysql.yml
 ```
 
 Then:
 ```bash
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpass
+        ports:
+        - containerPort: 3306
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -364,8 +303,155 @@ spec:
   selector:
     app: mysql
   ports:
-    - port: 3306
-      targetPort: 3306
-      nodePort: 30306  # 30000–32767
+  - name: mysql
+    port: 3306
+    targetPort: 3306
+    nodePort: 31306
+
+
 ```
 
+3• SAMBA:
+
+```bash
+nano samba.yml
+```
+
+Then:
+```bash
+  containers:
+  - name: samba
+    image: dperson/samba
+    args: ["-s", "public;/mount;yes;no;no;all;none"]
+    ports:
+    - containerPort: 139
+    - containerPort: 445
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba-service
+spec:
+  type: NodePort
+  selector:
+    name: samba
+  ports:
+  - name: smb139
+    port: 139
+    targetPort: 139
+    nodePort: 31390
+  - name: smb445
+    port: 445
+    targetPort: 445
+    nodePort: 31445
+```
+To run pods:
+
+```bash
+kubectl apply -f web-server.yml
+```
+
+```bash
+kubectl apply -f samba.yml
+```
+
+```bash
+kubectl apply -f mysql.yml
+```
+
+chek pods with
+
+```bash
+kubectl get pods
+```
+You should be see:
+
+```bash
+root@master:/home/sr2# kubectl get pods
+NAME                              READY   STATUS              RESTARTS   AGE
+mysql-697d9876f6-hjh6r            1/1     Running             0          2d1h
+samba                             1/1     Running             0          2d1h
+web-deployment-9d7df9d66-q2rzq    1/1     Running             0          2d1h
+```
+If you have problem with run pods try:
+
+```bash
+kubectl describe pod <pod-name>
+```
+
+## ONOS ACL Configuration: Internal Access Allowed, Internet Blocked
+*On Vm Ubuntu SDN*
+
+Let's do :
+
+• h1 = user1
+
+• h2 = user2
+
+• h3 = user3
+
+1• Allow Internal Traffic (10.10.0.0/16)
+
+```bash
+curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
+  "srcIp": "10.10.0.0/16",
+  "dstIp": "10.10.0.0/16",
+  "action": "ALLOW"
+}' http://localhost:8181/onos/v1/acl/rules
+```
+2• Allow access to your local network
+
+```bash
+curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
+  "srcIp": "10.10.0.0/16",
+  "dstIp": "192.168.0.0/16",
+  "action": "ALLOW"
+}' http://localhost:8181/onos/v1/acl/rules
+```
+
+3• Deny access to internet
+
+```bash
+curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
+  "srcIp": "10.10.0.0/16",
+  "action": "DENY"
+}' http://localhost:8181/onos/v1/acl/rules
+```
+
+## MySQL Kubernetes Setup: Create DB1 and DB2
+### connect to mysql:
+
+`password = rootpass`
+
+```bash
+mysql -h <worker-ip> -P <service-port> -u root -p
+```
+
+### Create Databases:
+
+```bash
+mysql> CREATE DATABASE DB1;
+mysql> CREATE DATABASE DB2;
+```
+
+### Create users:
+
+```bash
+mysql> CREATE USER 'user1'@'%' IDENTIFIED BY 'P@ssw0rd';
+mysql> CREATE USER 'user2'@'%' IDENTIFIED BY 'P@ssw0rd';
+mysql> CREATE USER 'user3'@'%' IDENTIFIED BY 'P@ssw0rd';
+```
+
+### Grant User Permissions:
+
+```bash
+mysql> GRANT ALL PRIVILEGES ON DB1.* TO 'user1'@'%';
+mysql> GRANT ALL PRIVILEGES ON DB2.* TO 'user2'@'%';
+mysql> GRANT ALL PRIVILEGES ON DB2.* TO 'user3'@'%';
+```
+
+### Apply Permission Changes:
+
+```bash
+mysql> FLUSH PRIVILEGES;
+```
