@@ -3,28 +3,56 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 ## Getting docker images
 
-1. Install docker:
+1• Install docker:
 
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
-2. Install [Contairnet decker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
+2• Install [Contairnet decker image](https://hub.docker.com/r/containernet/containernet), from docker hub:
 
 ```bash
 docker pull containernet/containernet
 ```
 
-3. Install [ONOS docker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
+3• Install [ONOS docker image](https://hub.docker.com/r/onosproject/onos), from docker hub:
 
 ```bash
 docker pull onosproject/onos
 ```
 
-## Executing the infrastructure
-After the images are pulled and the build process is complete, you can launch your emulated data-plane and ONOS controller using the provided scripts or Docker commands. Make sure all dependencies are properly installed and Docker is running.
+# After install repesitory with *git clone* :
 
 ```bash
 cd Projet-M207
 ```
+
+4• Create a Docker ubuntu gateway to allow access to the internet and other networks:
+
+We need to creat first *dockerfile*
+
+```bash
+FROM ubuntu:xenial
+
+RUN apt-get update && apt-get install -y \
+    iproute2 \
+    net-tools \
+    iputils-ping \
+    iptables \
+    dnsutils \
+    curl \
+    tcpdump \
+    vim \
+    python && \
+    apt-get clean
+```
+
+Then we will build it
+
+```bash
+docker build -t gateway .
+```
+
+## Executing the infrastructure
+After the images are pulled and the build process is complete, you can launch your emulated data-plane and ONOS controller.
 
 After that, execute the docker composition with:
 
