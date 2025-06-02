@@ -1,6 +1,8 @@
 # Projet-M207
 SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitoring. Deployment of HTTPS, MySQL, and Samba services in Kubernetes, with dynamic network management and inventory via FusionInventory.
 
+![Lab Setup](topo.jpge)
+
 ## Prepare Your Lab Environment
 
 1• Create the VMs
