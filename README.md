@@ -100,6 +100,13 @@ After a while, both images will be up and running. Log into the Containernet con
 docker exec -it containernet bash
 ```
 
+Inside the container, to run the intended topology, execute the following commands:
+```bash
+mn -c;
+curl -O https://raw.githubusercontent.com/Faical-Ach/Projet-M207/main/topo.py;
+python topo.py;
+```
+
 ## Configuring SDN components
 
 "open a new terminal"
@@ -108,13 +115,6 @@ Connect to the ONOS controller by executing:
 
 ```bash
 docker exec -it onos bash
-```
-
-Inside the container, to run the intended topology, execute the following commands:
-```bash
-mn -c;
-curl -O https://raw.githubusercontent.com/Faical-Ach/Projet-M207/main/topo.py;
-python topo.py;
 ```
 
 execute the Onos Command Line Interface (CLI) or client console by executing:
@@ -136,6 +136,19 @@ Go to the main menu -> Applications. Enable the following applications (select a
 • Host Location Provider (org.onosproject.hostprovider)
 
 ![Lab Setup](images/topo.py.png)
+
+Indeed, you could have enabled all these applications via the Onos console. Go to your containernet console and execute the command:
+```bash
+containernet> pingall
+```
+You should still see no connectivity, but, do not worry, we did that just to make sure our controller recognizes fully our data-plane. Go to the main menu -> Topology, you should be able to see the correct topology (if you do not see the hosts toggle the host visibility by typing h on the GUI or enabling on the display options panel at the left lower corner).
+
+Activate ONOS forwarding and ACL apps inside Onos console:
+
+```bash
+onos > app activate org.onosproject.fwd
+onos > app activate org.onosproject.acl
+```
 
 ## Kubernetes Cluster Setup: Master & Worker Nodes
 
