@@ -1,3 +1,6 @@
+#### With the growing need for flexibility, automation, and network monitoring, traditional architectures are reaching their limits. Software Defined Networking (SDN), by separating traffic control from its forwarding, offers a more dynamic approach. This project proposes the implementation of an SDN infrastructure controlled by ONOS, deployed using Kubeadm (Kubernetes), and monitored with GLPI.
+#### How can we implement a modern, automated, and monitorable network infrastructure by combining SDN, Kubernetes, and GLPI technologies to overcome the limitations of classical architectures?
+
 # Projet-M207
 SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitoring. Deployment of HTTPS, MySQL, and Samba services in Kubernetes, with dynamic network management and inventory via FusionInventory.
 
@@ -148,6 +151,45 @@ Activate ONOS forwarding and ACL apps inside Onos console:
 ```bash
 onos > app activate org.onosproject.fwd
 onos > app activate org.onosproject.acl
+```
+
+## ONOS ACL Configuration: Internal Access Allowed, Internet Blocked
+*On Vm Ubuntu SDN*
+
+Let's do :
+
+• h1 = user1
+
+• h2 = user2
+
+• h3 = user3
+
+1• Allow Internal Traffic (10.10.0.0/16)
+
+```bash
+curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
+  "srcIp": "10.10.0.0/16",
+  "dstIp": "10.10.0.0/16",
+  "action": "ALLOW"
+}' http://localhost:8181/onos/v1/acl/rules
+```
+2• Allow access to your local network
+
+```bash
+curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
+  "srcIp": "10.10.0.0/16",
+  "dstIp": "192.168.0.0/16",
+  "action": "ALLOW"
+}' http://localhost:8181/onos/v1/acl/rules
+```
+
+3• Deny access to internet
+
+```bash
+curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
+  "srcIp": "10.10.0.0/16",
+  "action": "DENY"
+}' http://localhost:8181/onos/v1/acl/rules
 ```
 
 ## Kubernetes Cluster Setup: Master & Worker Nodes
@@ -377,45 +419,6 @@ If you have problem with run pods try:
 
 ```bash
 kubectl describe pod <pod-name>
-```
-
-## ONOS ACL Configuration: Internal Access Allowed, Internet Blocked
-*On Vm Ubuntu SDN*
-
-Let's do :
-
-• h1 = user1
-
-• h2 = user2
-
-• h3 = user3
-
-1• Allow Internal Traffic (10.10.0.0/16)
-
-```bash
-curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
-  "srcIp": "10.10.0.0/16",
-  "dstIp": "10.10.0.0/16",
-  "action": "ALLOW"
-}' http://localhost:8181/onos/v1/acl/rules
-```
-2• Allow access to your local network
-
-```bash
-curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
-  "srcIp": "10.10.0.0/16",
-  "dstIp": "192.168.0.0/16",
-  "action": "ALLOW"
-}' http://localhost:8181/onos/v1/acl/rules
-```
-
-3• Deny access to internet
-
-```bash
-curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
-  "srcIp": "10.10.0.0/16",
-  "action": "DENY"
-}' http://localhost:8181/onos/v1/acl/rules
 ```
 
 ## MySQL Kubernetes Setup: Create DB1 and DB2
