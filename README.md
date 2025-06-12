@@ -156,6 +156,8 @@ onos > app activate org.onosproject.fwd
 onos > app activate org.onosproject.acl
 ```
 
+
+
 ## 🔒 Step 5: ONOS ACL Rules (SDN VM)
 *On Vm Ubuntu SDN*
 
@@ -464,3 +466,77 @@ mysql> GRANT ALL PRIVILEGES ON DB2.* TO 'user3'@'%';
 ```bash
 mysql> FLUSH PRIVILEGES;
 ```
+
+## ✅ setp 8: Vérification des services depuis les hôtes SDN 
+
+You should get ports services with:
+
+```bash
+root@master:/home/sr2# kubectl get svc
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                       AGE
+kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP                       12d
+mysql-service   NodePort    10.105.211.29    <none>        3306:31306/TCP                12d
+samba-service   NodePort    10.109.197.207   <none>        139:31390/TCP,445:31445/TCP   12d
+web-service     NodePort    10.100.203.173   <none>        80:32304/TCP                  12d
+```
+
+Enter To Host in containernet exemple `h1`
+
+```bash
+containernet> h1 bash
+```
+
+you will see :
+
+```bash
+root@h1:/#
+```
+
+### 📡 1. Tester l'accès HTTP
+
+```bash
+root@h1:/# nc -zv <Worker_IP> <NodePort_HTTP>
+```
+
+If http work you should see this :
+
+```bash
+root@h1:/# nc -zv 192.168.3.131 32304
+Connection to 192.168.3.131 32304 port [tcp/*] succeeded!
+```
+
+🛢️ 2. Test MySQL Access from Hosts
+Run the following command from each host (e.g., h1, h2, h3) to test MySQL connectivity:
+
+```bash
+mysql -h <worker_IP> -P <NodePort_MySQL> -u user1 -p
+```
+🔐 Password: P@ssw0rd
+
+
+🧪 Expected Results:
+
+• 🖥️ From `h1`, you should see only `DB1`:
+
+```bash
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| DB1                |
++--------------------+
+```
+
+• 🖥️ From `h2` and `h3`, you should see only `DB2`:
+
+```bash
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| DB2                |
++--------------------+
+```
+
