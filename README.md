@@ -1,14 +1,17 @@
-#### With the growing need for flexibility, automation, and network monitoring, traditional architectures are reaching their limits. Software Defined Networking (SDN), by separating traffic control from its forwarding, offers a more dynamic approach. This project proposes the implementation of an SDN infrastructure controlled by ONOS, deployed using Kubeadm (Kubernetes), and monitored with GLPI.
+#### 🌐 Project Context
+With the growing need for flexibility, automation, and network monitoring, traditional architectures are reaching their limits. Software Defined Networking (SDN), by separating traffic control from its forwarding, offers a more dynamic approach. This project proposes the implementation of an SDN infrastructure controlled by ONOS, deployed using Kubeadm (Kubernetes), and monitored with GLPI.
 #### How can we implement a modern, automated, and monitorable network infrastructure by combining SDN, Kubernetes, and GLPI technologies to overcome the limitations of classical architectures?
 
 # Projet-M207
 SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitoring. Deployment of HTTPS, MySQL, and Samba services in Kubernetes, with dynamic network management and inventory via FusionInventory.
 
+## 🧪 Lab Topology
+
 ![Lab Setup](images/topo-sdn.png)
 
-## Prepare Your Lab Environment
+## 🛠 Step 1: Prepare Your Lab Environment
 
-1• Create the VMs
+### 🖥 Virtual Machines
 
 •Use your preferred virtualization platform (VirtualBox, VMware, KVM, etc.)
 
@@ -26,9 +29,9 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 • *you should be `root`*
 
-## Getting docker images
+## 🐳 Step 2: Install Docker & Pull Required Images
 
-In Ubuntu `SDN`:
+On `SDN` VM:
 
 2• Install docker:
 
@@ -85,7 +88,7 @@ Then we will build it
 docker build -t gateway .
 ```
 
-## Executing the infrastructure
+## 🚀 Step 3: Deploy the Infrastructure
 After the images are pulled and the build process is complete, you can launch your emulated data-plane and ONOS controller.
 
 After that, execute the docker composition with:
@@ -110,7 +113,7 @@ curl -O https://raw.githubusercontent.com/Faical-Ach/Projet-M207/main/topo.py;
 python topo.py;
 ```
 
-## Configuring SDN components
+## 🧠 Step 4: Configure ONOS Controller
 
 "open a new terminal"
 
@@ -153,7 +156,7 @@ onos > app activate org.onosproject.fwd
 onos > app activate org.onosproject.acl
 ```
 
-## ONOS ACL Configuration: Internal Access Allowed, Internet Blocked
+## 🔒 Step 5: ONOS ACL Rules (SDN VM)
 *On Vm Ubuntu SDN*
 
 Let's do :
@@ -192,7 +195,7 @@ curl -u onos:rocks -X POST -H "Content-Type: application/json" -d '{
 }' http://localhost:8181/onos/v1/acl/rules
 ```
 
-## Kubernetes Cluster Setup: Master & Worker Nodes
+## ☸ Step 6: Kubernetes Cluster Setup
 
 Folow this configuration step by step:
 
@@ -279,7 +282,7 @@ master   Ready    control-plane   18m   v1.28.15
 worker    Ready    <none>          40h   v1.28.15
 ```
 
-## Creat Services (HTTP,SAMBA,MYSQL):
+## 📡 Step 6: Deploy Services (HTTP, MySQL, Samba)
 
 1• HTTP:
 
@@ -421,7 +424,10 @@ If you have problem with run pods try:
 kubectl describe pod <pod-name>
 ```
 
-## MySQL Kubernetes Setup: Create DB1 and DB2
+## 🛢️ Step 7: Configure MySQL Databases
+
+Create DB1 and DB2
+
 ### connect to mysql:
 
 `password = rootpass`
