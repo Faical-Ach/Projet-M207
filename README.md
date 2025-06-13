@@ -495,6 +495,19 @@ Once the container is running, open your browser and navigate to:
 
 [http://localhost:80](http://localhost:80)
 
+Follow the steps in the browser:
+
+### confi glpi_database :
+![Config database glpi](images/glpi_step1.png)
+
+To find SQL server:
+
+```bash
+docker network inspect glpi_default
+```
+![Config glpi](images/glpi_step2.png)
+
+![Config glpi](images/glpi_step3.png)
 
 ## ✅ setp 9: Vérification des services depuis les hôtes SDN 
 
