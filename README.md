@@ -286,6 +286,8 @@ worker    Ready    <none>          40h   v1.28.15
 
 ## 📡 Step 6: Deploy Services (HTTP, MySQL, Samba)
 
+On `Vm Master` node:
+
 1• HTTP:
 
 ```bash
@@ -427,6 +429,8 @@ kubectl describe pod <pod-name>
 ```
 
 ## 🛢️ Step 7: Configure MySQL Databases
+
+On `Vm SDN` :
 
 Create DB1 and DB2
 
