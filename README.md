@@ -497,7 +497,7 @@ Once the container is running, open your browser and navigate to:
 
 Follow the steps in the browser:
 
-### confi glpi_database :
+### Database Config :
 ![Config database glpi](images/glpi_step1.png)
 
 To find SQL server:
@@ -505,9 +505,26 @@ To find SQL server:
 ```bash
 docker network inspect glpi_default
 ```
+
+Credentials:
+
+• Username: `glpi_user`
+
+• Password: `glpi`
+
+
+### Setup :
 ![Config glpi](images/glpi_step2.png)
 
+Then :
+
+### Confirmation
 ![Config glpi](images/glpi_step3.png)
+
+finally Your glpi work :
+
+### GLPI Ready :
+![Config glpi](images/glpi_step4.png)
 
 ## ✅ setp 9: Vérification des services depuis les hôtes SDN 
 
