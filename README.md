@@ -129,7 +129,7 @@ execute the Onos Command Line Interface (CLI) or client console by executing:
 ./apache-karaf-4.2.14/bin/client
 ```
 
-Make sure the output contains the Onos GUI. Now, you can go to your Onos GUI using your browser and going to the address localhost:8181/onos/ui/. The default username / password is onos/rocks. Check the GUI and explore the main menu (bars at the left upper corner).
+Make sure the output contains the Onos GUI. Now, you can go to your Onos GUI using your browser and going to the address localhost:8181/onos/ui/. The default `username / password` is `onos/rocks`. Check the GUI and explore the main menu (bars at the left upper corner).
 
 Go to the main menu -> Applications. Enable the following applications (select and hit the play button near the upper right corner):
 
@@ -147,9 +147,9 @@ Indeed, you could have enabled all these applications via the Onos console. Go t
 ```bash
 containernet> pingall
 ```
-You should still see no connectivity, but, do not worry, we did that just to make sure our controller recognizes fully our data-plane. Go to the main menu -> Topology, you should be able to see the correct topology (if you do not see the hosts toggle the host visibility by typing h on the GUI or enabling on the display options panel at the left lower corner).
+You should still see no connectivity, but, do not worry, we did that just to make sure our controller recognizes fully our data-plane. Go to the main menu -> Topology, you should be able to see the correct topology (if you do not see the hosts toggle the host visibility by typing `h` on the GUI or enabling on the display options panel at the left lower corner).
 
-Activate ONOS forwarding and ACL apps inside Onos console:
+Activate ONOS `forwarding` and `ACL` apps inside Onos console:
 
 ```bash
 onos > app activate org.onosproject.fwd
@@ -467,7 +467,36 @@ mysql> GRANT ALL PRIVILEGES ON DB2.* TO 'user3'@'%';
 mysql> FLUSH PRIVILEGES;
 ```
 
-## ✅ setp 8: Vérification des services depuis les hôtes SDN 
+## 🤖 Step 8: Deploy and Configure the GLPI Virtual Assistant
+
+Switch to the SDN virtual machine.
+
+Then follow these steps:
+
+```bash
+cd Projet-M207/glpi
+```
+
+Start the GLPI container using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+The `-d` flag runs the containers in detached mode (in the background).
+
+To verify that the GLPI container is running, use:
+
+```bash
+docker ps
+```
+
+Once the container is running, open your browser and navigate to:
+
+[http://localhost:80](http://localhost:80)
+
+
+## ✅ setp 9: Vérification des services depuis les hôtes SDN 
 
 You should get ports services with:
 
@@ -505,7 +534,7 @@ root@h1:/# nc -zv 192.168.3.131 32304
 Connection to 192.168.3.131 32304 port [tcp/*] succeeded!
 ```
 
-🛢️ 2. Test MySQL Access from Hosts
+### 🛢️ 2. Test MySQL Access from Hosts
 Run the following command from each host (e.g., h1, h2, h3) to test MySQL connectivity:
 
 ```bash
