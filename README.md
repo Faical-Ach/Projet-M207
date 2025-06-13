@@ -7,7 +7,7 @@ SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitorin
 
 ## 🧪 Lab Topology
 
-![Lab Setup](images/topo-sdn.png)
+![Lab Setup](images/topo.png)
 
 ## 🛠 Step 1: Prepare Your Lab Environment
 
