@@ -538,9 +538,9 @@ Connection to 192.168.3.131 32304 port [tcp/*] succeeded!
 Run the following command from each host (e.g., h1, h2, h3) to test MySQL connectivity:
 
 ```bash
-mysql -h <worker_IP> -P <NodePort_MySQL> -u user1 -p
+mysql -h <worker_IP> -P <NodePort_MySQL> -u <username> -p
 ```
-🔐 Password: P@ssw0rd
+🔐 Password: `P@ssw0rd`
 
 
 🧪 Expected Results:
