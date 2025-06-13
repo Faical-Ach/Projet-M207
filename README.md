@@ -509,6 +509,7 @@ To find SQL server:
 ```bash
 docker network inspect glpi_default
 ```
+After exect this search for ip server `MARIADB`:
 
 Credentials:
 
@@ -603,3 +604,26 @@ mysql> SHOW DATABASES;
 +--------------------+
 ```
 
+
+
+<h2>Project Collaborators</h2>
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Faical Achehboun</td></tr>
+    <tr><td>2</td><td>Hakim Boufeqir</td></tr>
+    <tr><td>3</td><td>Marouane El Khalfi</td></tr>
+    <tr><td>4</td><td>Yassine ATYQ</td></tr>
+    <tr><td>5</td><td>Safouan Azarkou</td></tr>
+    <tr><td>6</td><td>Yassine El Farouah</td></tr>
+    <tr><td>7</td><td>Imad Azizou</td></tr>
+    <tr><td>8</td><td>Yassine Haifon</td></tr>
+    <tr><td>9</td><td>Mohammed Ait Oufares</td></tr>
+    <tr><td>10</td><td>Taha Benaliat</td></tr>
+  </tbody>
+</table>
