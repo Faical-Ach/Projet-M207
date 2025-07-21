@@ -2,7 +2,8 @@
 With the growing need for flexibility, automation, and network monitoring, traditional architectures are reaching their limits. Software Defined Networking (SDN), by separating traffic control from its forwarding, offers a more dynamic approach. This project proposes the implementation of an SDN infrastructure controlled by ONOS, deployed using Kubeadm (Kubernetes), and monitored with GLPI.
 #### How can we implement a modern, automated, and monitorable network infrastructure by combining SDN, Kubernetes, and GLPI technologies to overcome the limitations of classical architectures?
 
-# Projet-M207
+# Automated & Monitorable Network Architecture Using ONOS, Kubeadm, and GLPI
+
 SDN infrastructure with ONOS, Kubernetes cluster via kubeadm, and GLPI monitoring. Deployment of HTTPS, MySQL, and Samba services in Kubernetes, with dynamic network management and inventory via FusionInventory.
 
 ## 🧪 Lab Topology
