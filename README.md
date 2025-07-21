@@ -531,6 +531,23 @@ finally Your glpi work :
 ### GLPI Ready :
 ![Config glpi](images/glpi_step4.png)
 
+### Creat User1 :
+![Config glpi](images/glpi_step55.png)
+
+``
+
+![Config glpi](images/glpi_step5.png)
+
+### Creat Ticket :
+![Config glpi](images/glpi_step6.png)
+
+### Check Tickets : 
+![Config glpi](images/glpi_step7.png)
+
+``
+
+![Config glpi](images/glpi_step8.png)
+
 ## ✅ setp 9: Vérification des services depuis les hôtes SDN 
 
 You should get ports services with:
