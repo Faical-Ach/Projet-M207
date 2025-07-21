@@ -622,7 +622,7 @@ mysql> SHOW DATABASES;
 ```
 
 
-
+<!--
 <h2>Project Collaborators</h2>
 <table border="1" cellpadding="8" cellspacing="0">
   <thead>
@@ -644,3 +644,4 @@ mysql> SHOW DATABASES;
     <tr><td>10</td><td>Taha Benaliat</td></tr>
   </tbody>
 </table>
+-->
